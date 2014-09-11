@@ -4,4 +4,64 @@
 // but you're not, so you'll write it from scratch:
 var parseJSON = function(json) {
   // your code goes here
+
+  var result;
+
+  switch(json.charAt(0)){
+
+    case  '[' :
+
+      result = [];
+
+      break;
+
+    case '{' :
+
+      result = {};
+
+      break;
+
+    case '"' :
+
+      result = json.substring(1,json.length - 1);
+
+      return result;
+
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 't':
+    case 'n':
+
+      result = json;
+
+      return result;
+
+    case 'f':
+
+      if (json.charAt(1) === "a"){
+
+        result = json;
+
+        return result;
+
+      } else {
+
+        throw new Error('invalid json characters');
+
+      }
+
+    default :
+
+      throw new Error('invalid json characters');
+
+  }
+
 };
