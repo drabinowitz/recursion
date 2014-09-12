@@ -7,61 +7,71 @@ var parseJSON = function(json) {
 
   var result;
 
-  switch(json.charAt(0)){
+  function parseJsonRecursively(jsonStr,){
 
-    case  '[' :
+    var item;
 
-      result = [];
+    if (typeof jsonStr === 'undefined'){
 
-      break;
+      jsonStr = json;
 
-    case '{' :
+    }
 
-      result = {};
+    switch(json.charAt(0)){
 
-      break;
+      case  '[' :
 
-    case '"' :
+        item = [];
 
-      result = json.substring(1,json.length - 1);
+        break;
 
-      return result;
+      case '{' :
 
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-    case 't':
-    case 'n':
+        item = {};
 
-      result = json;
+        break;
 
-      return result;
+      case '"' :
 
-    case 'f':
+        item = jsonStr.substring(1,jsonStr.length - 1);
 
-      if (json.charAt(1) === "a"){
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+      case 't':
+      case 'n':
 
-        result = json;
+        item = jsonStr;
 
-        return result;
+      case 'f':
 
-      } else {
+        if (jsonStr.charAt(1) === "a"){
+
+          item = jsonStr;
+
+        } else {
+
+          throw new Error('invalid json characters');
+
+        }
+
+      default :
 
         throw new Error('invalid json characters');
 
-      }
-
-    default :
-
-      throw new Error('invalid json characters');
+    }
 
   }
+
+  result = parseJsonRecursively();
+
+  return result;
 
 };
